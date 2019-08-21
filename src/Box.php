@@ -78,17 +78,4 @@ interface Box
      */
     public function getMaxWeight(): int;
 
-	/**
-	 * Maximum amount of available items, null if is not limited
-	 *
-	 * @return int
-	 */
-    public function getAmount(): ?int;
-
-	/**
-	 * Decrease amount of available boxes
-	 */
-    public function decreaseAmount(): void;
-
-
 }
