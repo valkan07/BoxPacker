@@ -161,17 +161,26 @@ class Packer implements LoggerAwareInterface
     {
         $packedBoxes = new PackedBoxList();
 
+		$boxes = clone $this->boxes;
+
         //Keep going until everything packed
         while ($this->items->count()) {
             $packedBoxesIteration = [];
 
             //Loop through boxes starting with smallest, see what happens
-            foreach ($this->boxes as $box) {
+            foreach ($boxes as $box) {
+				/** @var $box Box */
+				if($box->getAmount() === 0){
+					continue;
+				}
+
                 $volumePacker = new VolumePacker($box, clone $this->items);
                 $volumePacker->setLogger($this->logger);
                 $packedBox = $volumePacker->pack();
                 if ($packedBox->getItems()->count()) {
                     $packedBoxesIteration[] = $packedBox;
+                    //mask box as already used
+					$box->decreaseAmount();
 
                     //Have we found a single box that contains everything?
                     if ($packedBox->getItems()->count() === $this->items->count()) {

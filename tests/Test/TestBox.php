@@ -58,6 +58,11 @@ class TestBox implements Box, JsonSerializable
      */
     private $maxWeight;
 
+	/**
+	 * @var int|null
+	 */
+    private $amount;
+
     /**
      * TestBox constructor.
      *
@@ -80,7 +85,8 @@ class TestBox implements Box, JsonSerializable
         int $innerWidth,
         int $innerLength,
         int $innerDepth,
-        int $maxWeight
+        int $maxWeight,
+		int $amount = null
     ) {
         $this->reference = $reference;
         $this->outerWidth = $outerWidth;
@@ -91,6 +97,7 @@ class TestBox implements Box, JsonSerializable
         $this->innerLength = $innerLength;
         $this->innerDepth = $innerDepth;
         $this->maxWeight = $maxWeight;
+        $this->amount = $amount;
     }
 
     /**
@@ -165,7 +172,23 @@ class TestBox implements Box, JsonSerializable
         return $this->maxWeight;
     }
 
-    /**
+	/**
+	 * @return int|null
+	 */
+	public function getAmount(): ?int
+	{
+		return $this->amount;
+	}
+
+	/**
+	 */
+	public function decreaseAmount(): void
+	{
+		if ($this->amount !== null)
+			$this->amount--;
+	}
+
+	/**
      * {@inheritdoc}
      */
     public function jsonSerialize()
@@ -177,6 +200,7 @@ class TestBox implements Box, JsonSerializable
             'innerDepth' => $this->innerDepth,
             'emptyWeight' => $this->emptyWeight,
             'maxWeight' => $this->maxWeight,
+            'amount' => $this->amount,
         ];
     }
 }
