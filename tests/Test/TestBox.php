@@ -9,9 +9,10 @@ declare(strict_types=1);
 namespace DVDoug\BoxPacker\Test;
 
 use DVDoug\BoxPacker\Box;
+use DVDoug\BoxPacker\BoxAvailability;
 use JsonSerializable;
 
-class TestBox implements Box, JsonSerializable
+class TestBox implements Box, JsonSerializable, BoxAvailability
 {
     /**
      * @var string
@@ -75,6 +76,7 @@ class TestBox implements Box, JsonSerializable
      * @param int    $innerLength
      * @param int    $innerDepth
      * @param int    $maxWeight
+     * @param int|null    $amount
      */
     public function __construct(
         string $reference,

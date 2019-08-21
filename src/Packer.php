@@ -170,7 +170,7 @@ class Packer implements LoggerAwareInterface
             //Loop through boxes starting with smallest, see what happens
             foreach ($boxes as $box) {
 				/** @var $box Box */
-				if($box->getAmount() === 0){
+				if($box instanceof BoxAvailability && $box->getAmount() === 0){
 					continue;
 				}
 
@@ -179,8 +179,10 @@ class Packer implements LoggerAwareInterface
                 $packedBox = $volumePacker->pack();
                 if ($packedBox->getItems()->count()) {
                     $packedBoxesIteration[] = $packedBox;
+
                     //mask box as already used
-					$box->decreaseAmount();
+					if ($box instanceof BoxAvailability)
+						$box->decreaseAmount();
 
                     //Have we found a single box that contains everything?
                     if ($packedBox->getItems()->count() === $this->items->count()) {
