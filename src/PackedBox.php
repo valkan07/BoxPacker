@@ -183,7 +183,7 @@ class PackedBox
     /**
      * @return int
      */
-    public function getInnerVolume(): int
+    public function getInnerVolume()
     {
         return $this->box->getInnerWidth() * $this->box->getInnerLength() * $this->box->getInnerDepth();
     }
